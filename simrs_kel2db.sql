@@ -2,120 +2,137 @@ create database simrs_kel2;
 use simrs_kel2;
 
 /*==============================================================*/
-/* Table: ASESMEN                                               */
+/* Table: asesmen                                               */
 /*==============================================================*/
-create table ASESMEN
+create table asesmen
 (
-   ID_ASESMEN           int not null auto_increment,
-   ID_PERAWAT           int not null,
-   ID_ANTRIAN           int,
-   ID_PASIEN            int,
-   KELUHAN_UTAMA        text,
-   ALERGI               varchar(50), 
-   TENSI                varchar(30),
-   SUHU                 decimal(4,1),
-   TINGGI_BADAN         int,
-   BERAT_BADAN          int,
-   NADI                 int,
-   RESPIRASI            int,
-   CREATED_AT           timestamp null, 
-   UPDATED_AT           timestamp null,
-   primary key (ID_ASESMEN)
+   id_asesmen           int not null auto_increment,
+   id_perawat           int not null,
+   id_antrian           int,
+   id_pasien            int,
+   keluhan_utama        text,
+   alergi               varchar(50),
+   tensi                varchar(30),
+   suhu                 decimal(4,1),
+   tinggi_badan         int,
+   berat_badan          int,
+   nadi                 int,
+   respirasi            int,
+   created_at           timestamp null,
+   updated_at           timestamp null,
+   primary key (id_asesmen)
 );
 
 /*==============================================================*/
-/* Table: DETAIL_E_RESEP                                        */
+/* Table: detail_e_resep                                        */
 /*==============================================================*/
-create table DETAIL_E_RESEP
+create table detail_e_resep
 (
-   ID_DETAIL            int not null auto_increment,
-   ID_RESEP             int not null,
-   ID_OBAT              int not null, 
-   DOSIS                varchar(50),
-   ATURAN_PAKAI         varchar(50),
-   JUMLAH               int,
-   CREATED_AT           timestamp null,
-   UPDATED_AT           timestamp null,
-   primary key (ID_DETAIL)
+   id_detail            int not null auto_increment,
+   id_resep             int not null,
+   id_obat              int not null,
+   dosis                varchar(50),
+   aturan_pakai         varchar(50),
+   jumlah               int,
+   created_at           timestamp null,
+   updated_at           timestamp null,
+   primary key (id_detail)
 );
 
 /*==============================================================*/
-/* Table: DOKTER                                                */
+/* Table: dokter                                                */
 /*==============================================================*/
-create table DOKTER
+create table dokter
 (
-   ID_DOKTER            int not null auto_increment,
-   ID_USER              int,
-   NAMA_DOKTER          varchar(50),
-   SPESIALISASI         varchar(30),
-   primary key (ID_DOKTER)
+   id_dokter            int not null auto_increment,
+   id_user              int,
+   nama_dokter          varchar(50),
+   spesialisasi         varchar(30),
+   primary key (id_dokter)
 );
 
 /*==============================================================*/
-/* Table: E_RESEP                                               */
+/* Table: e_resep                                               */
 /*==============================================================*/
-create table E_RESEP
+create table e_resep
 (
-   ID_RESEP             int not null auto_increment,
-   ID_RM                int not null,
-   ID_DOKTER            int not null, 
-   ID_ANTRIAN           int,
-   ID_PASIEN            int,
-   CATATAN_TAMBAHAN     text,
-   STATUS_RESEP         varchar(30) default 'diterbitkan', 
-   CREATED_AT           timestamp null, 
-   UPDATED_AT           timestamp null,
-   primary key (ID_RESEP)
+   id_resep             int not null auto_increment,
+   id_rm                int not null,
+   id_dokter            int not null,
+   id_antrian           int,
+   id_pasien            int,
+   catatan_tambahan     text,
+   status_resep         varchar(30) default 'diterbitkan',
+   created_at           timestamp null,
+   updated_at           timestamp null,
+   primary key (id_resep)
 );
 
 /*==============================================================*/
-/* Table: PERAWAT                                               */
+/* Table: perawat                                               */
 /*==============================================================*/
-create table PERAWAT
+create table perawat
 (
-   ID_PERAWAT           int not null auto_increment,
-   ID_UNIT              int,
-   ID_USER              int,
-   NAMA_PERAWAT         varchar(30),
-   primary key (ID_PERAWAT)
+   id_perawat           int not null auto_increment,
+   id_unit              int,
+   id_user              int,
+   nama_perawat         varchar(30),
+   primary key (id_perawat)
 );
 
 /*==============================================================*/
-/* Table: REKAM_MEDIK                                           */
+/* Table: rekam_medik                                           */
 /*==============================================================*/
-create table REKAM_MEDIK
+create table rekam_medik
 (
-   ID_RM                int not null auto_increment,
-   ID_DOKTER            int not null,
-   ID_ASESMEN           int not null, 
-   ID_ANTRIAN           int,
-   ID_PASIEN            int,
-   DIAGNOSA             text,
-   KODE_ICD             varchar(20), 
-   
-   CREATED_AT           timestamp null, 
-   UPDATED_AT           timestamp null,
-   primary key (ID_RM)
+   id_rm                int not null auto_increment,
+   id_dokter            int not null,
+   id_asesmen           int not null,
+   id_antrian           int,
+   id_pasien            int,
+   diagnosa             text,
+   kode_icd             varchar(20),
+   created_at           timestamp null,
+   updated_at           timestamp null,
+   primary key (id_rm)
 );
 
-alter table ASESMEN add constraint FK_MENGISI foreign key (ID_PERAWAT)
-      references PERAWAT (ID_PERAWAT) on delete restrict on update restrict;
+/*==============================================================*/
+/* Table: detail_tindakan_rm                                    */
+/*==============================================================*/
+create table detail_tindakan_rm
+(
+   id_detail_tindakan   int not null auto_increment,
+   id_rm                int not null,
+   id_layanan           int not null,
+   jumlah               int default 1,
+   catatan              text,
+   created_at           timestamp null,
+   updated_at           timestamp null,
+   primary key (id_detail_tindakan)
+);
 
-alter table DETAIL_E_RESEP add constraint FK_BERISI foreign key (ID_RESEP)
-      references E_RESEP (ID_RESEP) on delete restrict on update cascade;
 
-alter table E_RESEP add constraint FK_MEMBUAT foreign key (ID_DOKTER)
-      references DOKTER (ID_DOKTER) on delete restrict on update cascade;
+/*==============================================================*/
+/* PENAMBAHAN RELASI / FOREIGN KEY                              */
+/*==============================================================*/
+alter table asesmen add constraint fk_mengisi foreign key (id_perawat)
+      references perawat (id_perawat) on delete restrict on update restrict;
 
-alter table E_RESEP add constraint FK_MERESEPKAN foreign key (ID_RM)
-      references REKAM_MEDIK (ID_RM) on delete restrict on update cascade;
+alter table detail_e_resep add constraint fk_berisi foreign key (id_resep)
+      references e_resep (id_resep) on delete restrict on update cascade;
 
-alter table REKAM_MEDIK add constraint FK_MENDIAGNOSA foreign key (ID_DOKTER)
-      references DOKTER (ID_DOKTER) on delete restrict on update cascade;
+alter table e_resep add constraint fk_membuat foreign key (id_dokter)
+      references dokter (id_dokter) on delete restrict on update cascade;
 
+alter table e_resep add constraint fk_meresepkan foreign key (id_rm)
+      references rekam_medik (id_rm) on delete restrict on update cascade;
 
-alter table REKAM_MEDIK add constraint FK_BERDASARKAN_ASESMEN foreign key (ID_ASESMEN)
-      references ASESMEN (ID_ASESMEN) on delete restrict on update cascade;
+alter table rekam_medik add constraint fk_mendiagnosa foreign key (id_dokter)
+      references dokter (id_dokter) on delete restrict on update cascade;
 
-alter table DETAIL_TINDAKAN_RM add constraint FK_MELIPUTI_TINDAKAN foreign key (ID_RM)
-      references REKAM_MEDIK (ID_RM) on delete cascade on update cascade;
+alter table rekam_medik add constraint fk_berdasarkan_asesmen foreign key (id_asesmen)
+      references asesmen (id_asesmen) on delete restrict on update cascade;
+
+alter table detail_tindakan_rm add constraint fk_meliputi_tindakan foreign key (id_rm)
+      references rekam_medik (id_rm) on delete cascade on update cascade;
