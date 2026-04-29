@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Asesmen;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 
 class AsesmenController extends Controller
 {
     public function show($id_antrian){
-        // $asesmen = Asesmen::where('id_antrian', $id_antrian)->first();
+        $asesmen = Asesmen::where('id_antrian', $id_antrian)->first();
 
-        if(true /** $asesmen */) {
+        if(!$asesmen) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Data asesmen untuk antrian ini tidak ditemukan atau belum diinput'
@@ -27,6 +28,7 @@ class AsesmenController extends Controller
 
     public function store(Request $request){
         $validate = $request->validate([
+            'id_perawat' => 'required|integer',
             'id_antrian' => 'required|integer',
             'id_pasien' => 'required|integer',
             'keluhan_utama' => 'required|string',
@@ -37,11 +39,12 @@ class AsesmenController extends Controller
             'berat_badan' => 'required|numeric|min:0'
         ]);
 
-        // $asesmen = Asesmen::create($validate)
+        $asesmen = Asesmen::create($validate);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Data asesmen awal berhasil disimpan'
+            'message' => 'Data asesmen awal berhasil disimpan',
+            'data' => $asesmen
         ], 201);
     }
 }
