@@ -18,6 +18,9 @@ Route::get('/perawat', [PerawatController::class, 'index']);
 Route::get('/perawat/{id_perawat}', [PerawatController::class, 'show']);
 Route::post('/perawat', [PerawatController::class, 'store']);
 
+Route::get('/rekam-medik', [RekamMedikController::class, 'index']);
+Route::get('/rekam-medik/{$id_rm}', [RekamMedikController::class, 'show']);
+Route::get('/rekam-medik/pasien/{id_pasien}', [RekamMedikController::class, 'riwayat']);
 Route::post('/rekam-medik', [RekamMedikController::class, 'store']);
 
 Route::post('/resep', [ResepController::class, 'store']);
