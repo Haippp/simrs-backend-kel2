@@ -10,12 +10,15 @@ class RekamMedikController extends Controller
 {
     public function store(Request $request){
         $validate = $request->validate([
+            'id_asesmen' => 'required|integer',
+            'id_dokter' => 'required|integer',
             'id_antrian' => 'required|integer',
             'id_pasien' => 'required|integer',
-            'id_dokter' => 'required|integer',
             'diagnosa' => 'required|string',
             'tindakan_medis' => 'required|string'
         ]);
+
+        $rm = RekamMedik::create($validate);
 
         return response()->json([
             'status' => 'success',
