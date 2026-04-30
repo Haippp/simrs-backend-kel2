@@ -18,6 +18,10 @@ class Asesmen extends Model
         'nadi', 'respirasi'
     ];
 
+    public function perawat(){
+        return $this->belongsTo(Perawat::class, 'id_perawat', 'id_perawat');
+    }
+
     public function rekamMedik()
     {
         return $this->hasOne(RekamMedik::class, 'id_asesmen', 'id_asesmen');

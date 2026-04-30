@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Perawat extends Model
 {
@@ -14,5 +15,7 @@ class Perawat extends Model
 
     protected $fillable = ['id_unit', 'id_user', 'nama_perawat'];
 
-    
+    public function asesmen(){
+        return $this->HasMany(Asesmen::class, 'id_perawat', 'id_perawat');
+    }
 }
