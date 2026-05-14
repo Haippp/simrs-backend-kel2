@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AsesmenController;
 use App\Http\Controllers\Api\RekamMedikController;
 use App\Http\Controllers\Api\ResepController;
 
+Route::get('/asesmen/today', [AsesmenController::class, 'today']);
 Route::get('/asesmen/{id_antrian}', [AsesmenController::class, 'show']);
 Route::post('/asesmen', [AsesmenController::class, 'store']);
 

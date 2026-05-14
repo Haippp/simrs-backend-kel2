@@ -22,7 +22,26 @@ class AsesmenController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data asesmen  berhasil ditemukan',
-            'data' => ""// $asesmen
+            'data' => $asesmen
+        ]);
+    }
+
+    public function today(){
+        $asesmen_hari_ini = Asesmen::whereDate('created_at', now()->toDateString())->get();
+        
+        if(!$asesmen_hari_ini) {
+            return response()->json([
+                'status' => 'error',
+                'tanggal' => today(),
+                'message' => 'Data asesmen untuk antrian ini tidak ditemukan atau belum diinput'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data asesmen hari ini berhasil ditemukan',
+            'tanggal' => today(),
+            'data' => $asesmen_hari_ini
         ]);
     }
 
