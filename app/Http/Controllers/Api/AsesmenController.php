@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class AsesmenController extends Controller
 {
+    public function index(){
+        $asesmen = Asesmen::all();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'List data asesmen',
+            'data' => $asesmen
+        ], 200);
+    }
+
     public function show($id_antrian){
         $asesmen = Asesmen::where('id_antrian', $id_antrian)->first();
 
