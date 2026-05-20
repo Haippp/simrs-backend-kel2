@@ -22,7 +22,7 @@ class DokterController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => "Data perawat dari id dokter : $id_dokter",
+            'message' => "Data dokter dari id dokter : $id_dokter",
             'data' => $dokter
         ]);
     }
@@ -39,6 +39,16 @@ class DokterController extends Controller
             'status' => 'success',
             'message' => 'Data dokter telah berhasil di tambahkan',
             'data' => $dokter
+        ]);
+    }
+
+    public function biaya($id_dokter){
+        $biaya = Dokter::select('biaya_layanan')->findOrFail($id_dokter);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "Data dokter dari id dokter : $id_dokter",
+            'data' => $biaya
         ]);
     }
 }

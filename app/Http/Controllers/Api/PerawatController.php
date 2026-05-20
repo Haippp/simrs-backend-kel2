@@ -40,4 +40,13 @@ class PerawatController extends Controller
             'data' => $perawat
         ]);
     }
+    public function biaya($id_perawat){
+        $biaya = Perawat::select('biaya_layanan')->findOrFail($id_perawat);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "Data perawat dari id perawat : $id_perawat",
+            'data' => $biaya
+        ]);
+    }
 }
