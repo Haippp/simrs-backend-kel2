@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asesmen;
-use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 
+/**
+ * @tags Asesmen
+ */
 class AsesmenController extends Controller
 {
+    /**
+     * Tampilkan semua data asesmen.
+     *
+     * Endpoint ini mengambil semua catatan asesmen yang tersimpan.
+     * Berguna untuk melihat daftar asesmen pasien secara keseluruhan.
+     */
     public function index(){
         $asesmen = Asesmen::all();
         return response()->json([
@@ -18,6 +26,14 @@ class AsesmenController extends Controller
         ], 200);
     }
 
+    /**
+     * Detail asesmen berdasarkan id antrian.
+     *
+     * Endpoint ini mencari satu data asesmen dari id antrian tertentu.
+     * Jika data tidak ditemukan, akan mengembalikan pesan error.
+     *
+     * @param int $id_antrian ID antrian yang ingin dicari.
+     */
     public function show($id_antrian){
         $asesmen = Asesmen::where('id_antrian', $id_antrian)->first();
 
@@ -30,11 +46,17 @@ class AsesmenController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Data asesmen  berhasil ditemukan',
+            'message' => 'Data asesmen berhasil ditemukan',
             'data' => $asesmen
         ]);
     }
 
+    /**
+     * Tampilkan semua asesmen hari ini.
+     *
+     * Endpoint ini mengambil semua data asesmen yang dibuat pada tanggal hari ini.
+     * Cocok untuk melihat asesmen pasien pada shift saat ini.
+     */
     public function today(){
         $asesmen_hari_ini = Asesmen::whereDate('created_at', now()->toDateString())->get();
         
@@ -54,6 +76,12 @@ class AsesmenController extends Controller
         ]);
     }
 
+    /**
+     * Simpan asesmen awal pasien.
+     *
+     * Endpoint ini menyimpan data awal asesmen pasien termasuk keluhan utama,
+     * tensi, suhu, nadi, tinggi badan, dan berat badan.
+     */
     public function store(Request $request){
         $validate = $request->validate([
             'id_perawat' => 'required|integer',

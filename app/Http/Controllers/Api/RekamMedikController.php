@@ -6,8 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\RekamMedik;
 use Illuminate\Http\Request;
 
+/**
+ * @tags Rekam Medik
+ */
 class RekamMedikController extends Controller
 {
+    /**
+     * Simpan rekam medik pasien.
+     *
+     * Endpoint ini mencatat diagnosa dan tindakan medis pasien ke rekam medik.
+     * Data rekam medik akan disimpan dengan referensi asesmen, dokter, antrian, dan pasien.
+     */
     public function store(Request $request){
         $validate = $request->validate([
             'id_asesmen' => 'required|integer',
@@ -26,6 +35,14 @@ class RekamMedikController extends Controller
         ], 201);
     }
 
+    /**
+     * Riwayat rekam medik pasien.
+     *
+     * Endpoint ini mengambil semua rekam medik berdasarkan id_pasien.
+     * Cocok untuk melihat histori diagnosa dan tindakan medis pasien.
+     *
+     * @param int $id_pasien ID pasien untuk mengambil riwayat.
+     */
     public function riwayat($id_pasien){
         $riwayat = RekamMedik::where('id_pasien', $id_pasien);
 

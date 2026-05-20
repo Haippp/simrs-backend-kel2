@@ -6,8 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Dokter;
 use Illuminate\Http\Request;
 
+/**
+ * @tags Dokter
+ */
 class DokterController extends Controller
 {
+    /**
+     * Tampilkan semua data dokter.
+     *
+     * Endpoint ini menampilkan daftar dokter yang tersedia di sistem.
+     * Hasilnya di-return dalam format JSON.
+     */
     public function index(){
         $dokter = Dokter::all();
 
@@ -17,6 +26,15 @@ class DokterController extends Controller
             'data' => $dokter
         ]);
     }
+
+    /**
+     * Detail dokter berdasarkan ID.
+     *
+     * Endpoint ini mengambil data dokter lengkap berdasarkan id_dokter.
+     * Akan mengembalikan error jika dokter tidak ditemukan.
+     *
+     * @param int $id_dokter ID dokter yang dicari.
+     */
     public function show($id_dokter){
         $dokter = Dokter::findOrFail($id_dokter);
 
@@ -26,6 +44,13 @@ class DokterController extends Controller
             'data' => $dokter
         ]);
     }
+
+    /**
+     * Tambahkan dokter baru.
+     *
+     * Endpoint ini menyimpan data dokter baru ke tabel dokter.
+     * Pastikan id_user unik agar tidak terjadi duplikasi.
+     */
     public function store(Request $request){
         $validate = $request->validate([
             'id_user' => 'required|integer|unique:dokter,id_dokter',
@@ -42,6 +67,14 @@ class DokterController extends Controller
         ]);
     }
 
+    /**
+     * Cek biaya layanan dokter.
+     *
+     * Endpoint ini mengembalikan nilai biaya layanan untuk dokter tertentu.
+     * Berguna untuk modul billing atau penawaran biaya pasien.
+     *
+     * @param int $id_dokter ID dokter untuk cek biaya.
+     */
     public function biaya($id_dokter){
         $biaya = Dokter::select('biaya_layanan')->findOrFail($id_dokter);
 
