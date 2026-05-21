@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\AsesmenController;
 use App\Http\Controllers\Api\RekamMedikController;
 use App\Http\Controllers\Api\ResepController;
 
-Route::get('/antrian', [AntrianController::class, 'dummy']);
+Route::get('/antrian/unit/{id_unit}', [AntrianController::class, 'dummy']);
 
 Route::get('/asesmen', [AsesmenController::class, 'index']);
 Route::get('/asesmen/today', [AsesmenController::class, 'today']);
