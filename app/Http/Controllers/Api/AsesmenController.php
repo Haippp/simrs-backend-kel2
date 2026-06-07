@@ -91,6 +91,7 @@ class AsesmenController extends Controller
             'tensi' => 'required|string',
             'suhu' => 'required|numeric|between:0,45',
             'nadi' => 'required|integer|min:0',
+            'respirasi'   => 'required|integer|between:8,60',
             'tinggi_badan' => 'required|numeric|min:0',
             'berat_badan' => 'required|numeric|min:0'
         ]);
