@@ -87,6 +87,7 @@ class AsesmenController extends Controller
             'id_perawat' => 'required|integer',
             'id_antrian' => 'required|integer',
             'id_pasien' => 'required|integer',
+            'alergi' => 'required|string',
             'keluhan_utama' => 'required|string',
             'tensi' => 'required|string',
             'suhu' => 'required|numeric|between:0,45',
