@@ -30,8 +30,9 @@ class RekamMedikController extends Controller
         $rm = RekamMedik::create($validate);
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Rekam medik pasien berhasil disimpan',
+            'status'    => 'success',
+            'message'   => 'Rekam medik pasien berhasil disimpan',
+            'data'      => $rm,
         ], 201);
     }
 
@@ -44,7 +45,7 @@ class RekamMedikController extends Controller
      * @param int $id_pasien ID pasien untuk mengambil riwayat.
      */
     public function riwayat($id_pasien){
-        $riwayat = RekamMedik::where('id_pasien', $id_pasien);
+        $riwayat = RekamMedik::where('id_pasien', $id_pasien)->get();
 
         if(!$riwayat) {
             return response()->json([
